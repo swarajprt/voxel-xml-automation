@@ -1,0 +1,89 @@
+Voxel Supplier XML Automation – End-to-End Summary
+
+Project Overview
+Finance and reconciliation teams faced challenges manually processing 5000+ daily Voxel XML vendor statements. This project automated ingestion, validation, and transformation workflows, significantly reducing manual effort while meeting financial SLA requirements.
+Key Objectives
+•	Auto-ingest 5000+ XMLs/day (1KB–1MB).
+•	Parse and validate structure, vendor ID, and business rules.
+•	Generate output for Blackline and AMOS systems.
+•	Ensure error handling, archiving, and user-friendly monitoring.
+_______________________________________
+Technical Architecture
+Phase 1 – On-Prem SSIS & SQL Server
+•	Batch file trigger every 5 seconds (via SQL Agent).
+•	SSIS parallelism: Multi-threaded Data Flow Tasks.
+•	SQL parsing via OPENXML() and dynamic rule validation.
+Phase 2 – Azure Data Factory (Hybrid Migration)
+•	Targeted migration of batch workloads to ADF.
+•	Leveraged Mapping Data Flows, SFTP integration, and activity logs for scalable vendors.
+________________________________________
+Core Workflow Breakdown
+File Ingestion & Preprocessing
+•	Files downloaded via MFT into a working directory.
+•	ForEach Loop in SSIS handles parallel file loads.
+XML Processing & Business Rules
+•	XML parsed using OPENXML() into temp tables.
+•	Rules: M&E, Card, Duplicate, Recon, Pay validations.
+•	Invalid files routed to /Error, /Duplicate folders.
+Output Generation
+•	Stored Procedures generate:
+o	3-line journals for Blackline
+o	Vendor statements for AMOS
+File Archiving Logic
+•	Success → /Processed
+•	Duplicate → /Duplicate
+•	Errors → /Error
+________________________________________
+ADF Migration Scope
+Migrated Components
+•	File ingestion via ADF SFTP Linked Service.
+•	SQL logic refactored into Mapping Data Flows.
+•	Trigger-based ADF pipelines and alerts.
+Benefits
+•	Reduced on-prem load.
+•	Scalable, cost-effective processing.
+•	Cloud-native visibility and alerting.
+________________________________________
+Monitoring & Business Interface
+Power BI
+•	Dashboards: success/failure counts, SLA trends, vendor errors.
+Power Apps (Embedded)
+•	Error triage UI for business users.
+•	Commenting + resolution status management.
+Power Automate
+•	Real-time updates to backend SQL for resolved issues.
+________________________________________
+Key Challenges & Solutions
+Challenge	Solution
+Dynamic XML schemas	       Conditional tag handling with ISNULL() & flexible joins
+Tight UAT timelines	      Created test harness + XML simulators
+Multiple suppliers	      Segmented logic + clear documentation
+Business dependency	      Frequent walkthroughs + structured comms
+High financial impact	      Escalation workflows and SLAs for critical errors
+________________________________________
+Best Practices Implemented
+•	Exception logging with error codes.
+•	File audit trail and status management.
+•	Parameterized SSIS and ADF components.
+•	SLA-based queue prioritization.
+•	Git-based versioning for packages.
+________________________________________
+Tools & Tech Stack
+Area	Tools & Technologies
+File Transfer	SFTP, MFT, Batch Scripts
+Scheduling	SQL Agent, ADF Triggers
+ETL & Validation	SSIS, SQL Server, Stored Procedure, OPENXML
+Cloud Pipelines	Azure Data Factory
+Monitoring	Power BI
+Error UI	Power Apps
+Alerts	Power Automate
+Logging	Custom SQL Tables
+Docs & Versioning	Excel, OneNote, Git
+________________________________________
+Business Impact
+✅ 90% reduction in manual effort
+✅ 99.9% uptime in ingestion workflows
+✅ Reconciliation time cut from 24h to 1h
+✅ Proactive triage with Power BI + Power Apps
+✅ Foundation laid for ADF-first architecture
+
