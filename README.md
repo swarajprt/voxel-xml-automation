@@ -1,3 +1,5 @@
+⚠️ **Confidential Code**: This repository does not include source code due to client confidentiality. It contains a high-level summary to demonstrate project scope and my technical contributions.
+
 Voxel Supplier XML Automation is an end-to-end ETL solution built to automate the ingestion, validation, transformation, and reconciliation of daily vendor statements received in XML format from Voxel. The project was initiated to eliminate manual processing bottlenecks, improve financial accuracy, and meet strict reconciliation SLAs.
 
 This solution features a hybrid architecture using SSIS + SQL Server for high-frequency processing and Azure Data Factory for scalable, cloud-native workloads. Monitoring and resolution interfaces were implemented using Power BI, Power Apps, and Power Automate, enabling business users to track and triage errors independently.
